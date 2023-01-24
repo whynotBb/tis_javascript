@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROCK-PAPER-SCISSORS</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+  </head>
+  <body>
+    <header id="header">
+      <h1><strong>ROCK-PAPER-SCISSORS</strong></h1>
+    </header>
+
+    <div id="com">
+      <ul>
+        <li><img src="images/rock.svg" alt="" /></li>
+        <li><img src="images/paper.svg" alt="" /></li>
+        <li><img src="images/scissors.svg" alt="" /></li>
+      </ul>
+    </div>
+    <div id="player">
+      <ul>
+        <li data-id="0"><img src="images/rock.svg" alt="" /></li>
+        <li data-id="1"><img src="images/paper.svg" alt="" /></li>
+        <li data-id="2"><img src="images/scissors.svg" alt="" /></li>
+      </ul>
+    </div>
+    <div id="result">
+      <ul>
+        <!-- <li class="win">W</li>
+        <li class="lose">L</li>
+        <li class="draw">D</li> -->
+      </ul>
+    </div>
+    <div id="cover">
+      <h1>you <strong>Win</strong></h1>
+      <h2>To Be <strong>Continue~~</strong></h2>
+      <button id="btnRestart">restart game</button>
+    </div>
+  </body>
+  <script>
+    const comItems = document.querySelectorAll("#com ul li");
+    const playerItems = document.querySelectorAll("#player ul li");
+    const result = document.querySelector("#result ul");
+
+    comItems.forEach(function (item, i) {
+      console.log(item, i);
+    });
+    console.log("🚀 ~ file: index.html:60 ~ comItems", comItems);
+
+    let random = parseInt(Math.random() * 3);
+    function showComputerItem() {
+      random = parseInt(Math.random() * 3);
+      //comItems[0].style.display = "none";
+      //comItems[1].style.display = "none";
+      //comItems[2].style.display = "none";
+
+      //for (let i = 0; i > 3; i++) {
+      //  comItems[i].style.display = "none";
+      //}
+      comItems.forEach(function (item) {
+        item.style.display = "none";
+      });
+      comItems[random].style.display = "block";
+      return random;
+    }
+
+    let idx = setInterval(showComputerItem, 100);
+    /*
+    playerItems[0].addEventListener("click", function () {
+      clearInterval(idx);
+    });
+    playerItems[1].addEventListener("click", function () {
+      clearInterval(idx);
+    });
+    playerItems[2].addEventListener("click", function () {
+      clearInterval(idx);
+    });
+    */
+
+    //for (let i = 0; i < playerItems.length; i++) {
+    //  playerItems[i].addEventListener("click", function () {
+    //    clearInterval(idx);
+    //  });
+    //}
+    playerItems.forEach(function (item, i) {
+      item.addEventListener("click", function () {
+        clearInterval(idx);
+        console.log(random, i);
+        // com 0 - player 1
+        // com 1 - player 2
+        // com 2 - player 0
+
+        if (random === i) {
+          console.log("draw");
+          result.innerHTML = `<li class="draw">D</li>`;
+        } else if (
+          (random === 0 && i === 1) ||
+          (random === 1 && i === 2) ||
+          (random === 2 && i === 0)
+        ) {
+          console.log("win");
+          result.innerHTML = `<li class="win">W</li>`;
+        } else {
+          console.log("lose");
+          result.innerHTML = `<li class="lose">L</li>`;
+        }
+      });
+    });
+    // 3판 점수 누적 후 restart / 3판 점수 누적하여 최종 승자
+  </script>
+</html>
